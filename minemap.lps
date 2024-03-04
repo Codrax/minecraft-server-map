@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <Version Value="12"/>
+    <BuildModes Active="Release"/>
+    <Units>
+      <Unit>
+        <Filename Value="minemap.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos X="27" Y="17"/>
+        <UsageCount Value="73"/>
+        <Bookmarks Count="2">
+          <Item0 X="5" Y="813" ID="3"/>
+          <Item1 X="20" Y="107" ID="1"/>
+        </Bookmarks>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="/usr/share/fpcsrc/3.2.2/packages/fcl-base/src/custapp.pp"/>
+        <UnitName Value="CustApp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="51"/>
+        <CursorPos X="16" Y="61"/>
+        <UsageCount Value="9"/>
+      </Unit>
+      <Unit>
+        <Filename Value="../Libraries/Codrut Library Pack/Cod.Console.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="19"/>
+        <CursorPos X="5" Y="37"/>
+        <UsageCount Value="9"/>
+      </Unit>
+      <Unit>
+        <Filename Value="/usr/share/fpcsrc/3.2.2/rtl/objpas/classes/classesh.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1904"/>
+        <CursorPos X="23" Y="1920"/>
+        <UsageCount Value="24"/>
+      </Unit>
+      <Unit>
+        <Filename Value="../Indy Internet Direct 10/Lib/System/IdStack.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="295"/>
+        <CursorPos X="18" Y="312"/>
+        <UsageCount Value="5"/>
+      </Unit>
+      <Unit>
+        <Filename Value="libdefine.pas"/>
+        <UnitName Value="LibDefine"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="32" Y="8"/>
+        <UsageCount Value="6"/>
+      </Unit>
+      <Unit>
+        <Filename Value="../Indy Internet Direct 10/Lib/Protocols/IdSSLOpenSSLHeaders.pas"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="5"/>
+      </Unit>
+      <Unit>
+        <Filename Value="../Indy Internet Direct 10/Lib/Core/IdContext.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="74"/>
+        <CursorPos X="3" Y="91"/>
+        <UsageCount Value="24"/>
+      </Unit>
+      <Unit>
+        <Filename Value="../Indy Internet Direct 10/Lib/Protocols/IdMappedPortTCP.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="2"/>
+        <UsageCount Value="24"/>
+      </Unit>
+      <Unit>
+        <Filename Value="../Indy Internet Direct 10/Lib/Core/IdCustomTCPServer.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="376"/>
+        <CursorPos X="14" Y="391"/>
+        <UsageCount Value="24"/>
+      </Unit>
+      <Unit>
+        <Filename Value="../Indy Internet Direct 10/Lib/Core/IdThreadSafe.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="183"/>
+        <CursorPos X="25" Y="202"/>
+        <UsageCount Value="24"/>
+      </Unit>
+      <Unit>
+        <Filename Value="../Indy Internet Direct 10/Lib/Core/IdSocketHandle.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="619"/>
+        <CursorPos Y="624"/>
+        <UsageCount Value="23"/>
+      </Unit>
+      <Unit>
+        <Filename Value="../Indy Internet Direct 10/Lib/System/IdStackConsts.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="123"/>
+        <CursorPos X="3" Y="127"/>
+        <UsageCount Value="23"/>
+      </Unit>
+      <Unit>
+        <Filename Value="MinecraftMapper.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="206"/>
+        <CursorPos X="38" Y="223"/>
+        <UsageCount Value="14"/>
+        <Bookmarks Count="1">
+          <Item0 X="3" Y="451" ID="2"/>
+        </Bookmarks>
+      </Unit>
+      <Unit>
+        <Filename Value="/usr/share/fpcsrc/3.2.2/packages/fcl-json/src/fpjson.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="609"/>
+        <CursorPos X="3" Y="604"/>
+        <UsageCount Value="12"/>
+      </Unit>
+      <Unit>
+        <Filename Value="../Libraries/Codrut Library Pack/Cod.VersionUpdate.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="24" Y="8"/>
+        <UsageCount Value="9"/>
+      </Unit>
+      <Unit>
+        <Filename Value="../Libraries/Codrut Library Pack/Cod.Types.pas"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="9"/>
+      </Unit>
+      <Unit>
+        <Filename Value="../Libraries/Codrut Library Pack/Cod.Math.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="28" Y="20"/>
+        <UsageCount Value="9"/>
+      </Unit>
+      <Unit>
+        <Filename Value="Dependencies/Cod.Console.pas"/>
+        <EditorIndex Value="3"/>
+        <CursorPos X="3" Y="10"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="Dependencies/Cod.VersionUpdate.pas"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="41" Y="7"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="Dependencies/Cod.Math.pas"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="3"/>
+        <CursorPos X="28" Y="20"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
+    </Units>
+    <JumpHistory HistoryIndex="3">
+      <Position>
+        <Filename Value="minemap.lpr"/>
+        <Caret Line="17" Column="3"/>
+      </Position>
+      <Position>
+        <Filename Value="Dependencies/Cod.Console.pas"/>
+        <Caret Line="10" Column="3"/>
+      </Position>
+      <Position>
+        <Filename Value="minemap.lpr"/>
+        <Caret Line="17" Column="27"/>
+      </Position>
+      <Position>
+        <Filename Value="Dependencies/Cod.VersionUpdate.pas"/>
+        <Caret Line="7" Column="41"/>
+      </Position>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode="default">
+        <Mode Name="default">
+          <local>
+            <CommandLineParams Value="-debug"/>
+          </local>
+        </Mode>
+      </Modes>
+    </RunParams>
+    <HistoryLists>
+      <List Name="LaunchingApplication" Type="File" Count="1">
+        <Item1 Value="/usr/bin/gnome-terminal -t &apos;Lazarus Run Output&apos; -e &apos;$(LazarusDir)/tools/runwait.sh $(TargetCmdLine)&apos;"/>
+      </List>
+      <List Name="CommandLineParameters" Count="1">
+        <Item1 Value="-debug"/>
+      </List>
+    </HistoryLists>
+  </ProjectSession>
+</CONFIG>

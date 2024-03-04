@@ -1,0 +1,22 @@
+[
+  {
+    "address" : "server1.site.com",
+    "host" : "localhost",
+    "port" : 25566
+  },
+  {
+    "address" : "server2.site.com",
+    "host" : "localhost",
+    "port" : 25567
+  },
+  {
+    "address" : "server3.site.com",
+    "host" : "192.168.1.101",
+    "port" : 25565
+  },
+  {
+    "address" : "192.168.1.100",
+    "host" : "localhost",
+    "port" : 25568
+  }
+]
