@@ -36,10 +36,10 @@ This is an JSON array of `Mapping info`. The mapping info is as follows
 ![image](https://github.com/Codrax/minecraft-server-map/assets/68193064/4a44dc9f-4263-4039-a78b-4e408248189a)
 
 ## Compiling
-To compile this application, just install the Lazarus IDE version 2.2.6 together with [Indy Internet Direct 10](https://www.indyproject.org/download/). The `shared-lib` executables need `libssl` which you will need to find an compile with `make`. They should be avalabile [here](https://www.indyproject.org/download/ssl/). Or you can use the pre-compiled version I have included.
+To compile this application, just install the Lazarus IDE version 2.2.6 together with [Indy Internet Direct 10](https://www.indyproject.org/download/). The `shared-lib` executables need `libssl`, which you will need to find an compile with `make`. They should be avalabile [here](https://www.indyproject.org/download/ssl/). Or you can use the pre-compiled version I have included.
 
 ## Function
-This application, uses a modified `TIdMappedPortTCP` from Indy, which captures the first handshake the client sends to the server, afterwhich, the Outbound connections is either established or discarder If there is a valid match for the adress.
+This application, uses a modified `TIdMappedPortTCP` from Indy, which captures the first handshake the client sends to the server, afterwhich, the Outbound connections is either established or discarded If there is a valid match for the adress.
 ![image](https://github.com/Codrax/minecraft-server-map/assets/68193064/91b6a2cf-4ca6-4c61-baa8-3a26145c8f21)
 
 
