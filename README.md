@@ -82,4 +82,4 @@ The `servers.json` file
 ## Great resources
 Here are some great resources that I used in this project
  - [This article](https://dev.to/kiliandeca/we-built-a-minecraft-protocol-reverse-proxy-2e4f) from Kilian Decaderincourt
- - [This protocol wiki](https://wiki.vg/Protocol#Handshake)https://wiki.vg/Protocol#Handshake
+ - [This protocol wiki](https://wiki.vg/Protocol#Handshake)
