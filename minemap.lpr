@@ -129,6 +129,7 @@ type
     procedure WriteNewLn;
     procedure WriteConnectionCount;
     procedure WriteError(Error: string);
+    procedure WriteWarning(Warning: string);
     procedure WriteTitle(ATitle: string);
     procedure WriteHelp; virtual;
     procedure WriteMappingInfo(ATitle: string; Mapping: TMinecraftMapping);
@@ -264,6 +265,18 @@ begin
 
   if HasOption('debug') then
     begin
+      Terminate;
+      Exit;
+    end;
+
+  if HasOption('check-updates') then
+    begin
+      CheckForUpdates;
+      WriteDate;
+      if ServerVersion.NewerThan(Version) then
+        TConsole.WriteLn:='A new version is avalabile.'
+      else
+        TConsole.WriteLn:='No new version found.';
       Terminate;
       Exit;
     end;
@@ -407,6 +420,13 @@ begin
           Terminate;
           Exit;
         end;
+
+  // Check recurse
+  for I := 0 to High(List) do
+    if (List[I].Port = Mapper.DefaultPort) and ((List[I].Host='localhost') or (List[I].Host='127.0.0.1') or (List[I].Host='0.0.0.0')) then
+      begin
+        WriteWarning(Format('Server %D is potentially recursive.', [I]));
+      end;
 
   // Set
   Mapper.Mappings := List;
@@ -807,7 +827,7 @@ begin
   TConsole.TextColor := TConsoleColor.LightRed;
   TConsole.Write := 'Disconnected from ';
   TConsole.TextColor := TConsoleColor.White;
-  TConsole.WriteLn := Format('"%S", on server "%S"', [Con.Binding.PeerIP, Con.Host]);
+  TConsole.WriteLn := Format('"%S", on server "%S:%D"', [Con.Binding.PeerIP, Con.Host, Con.Port]);
 
   ResetNewLn;
 end;
@@ -899,6 +919,16 @@ begin
   TConsole.WriteLn:=Error;
 end;
 
+procedure TMapperApplication.WriteWarning(Warning: string);
+begin
+  TConsole.BgColor:=TConsoleColor.Yellow;
+  TConsole.TextColor:=TConsoleColor.Black;
+  TConsole.Write:='WARNING:';
+  TConsole.ResetStyle;
+  TConsole.Write:=' ';
+  TConsole.WriteLn:=Warning;
+end;
+
 procedure TMapperApplication.WriteTitle(ATitle: string);
 begin
   TConsole.WriteLn:='';
@@ -936,12 +966,6 @@ begin
   // Defaults
   Mapper.DefaultPort := 25565;
   Mapper.DefaultAllow:=false;
-
-  Exit;
-  // Debug
-  Mapper.AddMapping('192.168.1.103', '192.168.1.104', 25570);
-  Mapper.AddMapping('linux-server', '192.168.1.104', 25570);
-  Mapper.AddMapping('game.play.025555.xyz', '192.168.1.104', 25571);
 end;
 
 destructor TMapperApplication.Destroy;
@@ -979,6 +1003,7 @@ begin
   TConsole.WriteLn:='--create -> Create all necesary configuration files';
   TConsole.WriteLn:='--create-config -> Write new config file';
   TConsole.WriteLn:='--create-server-list -> Write new server list file';
+  TConsole.WriteLn:='--check-updates -> Check for updates';
   WriteNewLn;
 
   WriteTitle('App keystrokes');
