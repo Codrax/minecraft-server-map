@@ -66,8 +66,9 @@ type
     procedure DoRun; override;
   public
     const
-    CONFIG_FILE = 'config.json';
-    SERVERS_FILE = 'servers.json';
+    CONFIG_FILE_NAME = 'config.json';
+    SERVERS_FILE_NAME = 'servers.json';
+    LOGS_FILE_NAME = 'mapper.log';
 
     KEY_LISTEN = 'listen-port';
     KEY_UPDATE = 'check-update';
@@ -83,8 +84,15 @@ type
     // Properties
     Key: TKeyData;
 
+    // Files
+    ApplicationDir: string;
+    ConfigFile,
+    ServersFile,
+    LogsFile: string;
+
     // Data
     FDoCheckUpdates: boolean;
+    FDoLogging: boolean;
 
     // File updater
     Updater: TUpdaterThread;
@@ -134,13 +142,16 @@ type
     procedure WriteHelp; virtual;
     procedure WriteMappingInfo(ATitle: string; Mapping: TMinecraftMapping);
 
+    // Log
+    procedure AddLog(Text: string; Kind: string = 'INFO');
+
     // Default
     constructor Create(TheOwner: TComponent); override;
     destructor Destroy; override;
   end;
 
 const
-  Version: TVersionRec = (Major:1;Minor:0;Maintenance:0);
+  Version: TVersionRec = (Major:1;Minor:0;Maintenance:1);
 
 var
   Application: TMapperApplication;
@@ -184,14 +195,14 @@ begin
       end;
 
     // Check
-    Change := GetLastModDate(TMapperApplication.CONFIG_FILE);
+    Change := GetLastModDate(Application.ConfigFile);
     if Change <> FLastModConfig then
       begin
         FLastModConfig := Change;
         @ChangedConfig;
       end;
 
-    Change := GetLastModDate(TMapperApplication.SERVERS_FILE);
+    Change := GetLastModDate(Application.ServersFile);
     if Change <> FLastModServers then
       begin
         FLastModServers := Change;
@@ -222,8 +233,8 @@ begin
   SetDelay(SleepTime);
 
   // Prep file
-  FLastModConfig:=GetLastModDate(TMapperApplication.CONFIG_FILE);
-  FLastModServers:=GetLastModDate(TMapperApplication.SERVERS_FILE);
+  FLastModConfig:=GetLastModDate(Application.ConfigFile);
+  FLastModServers:=GetLastModDate(Application.ServersFile);
 end;
 
 { TMyApplication }
@@ -240,34 +251,36 @@ begin
     end;
 
   // parse parameters
+  FDoLogging := HasOption('log-messages');
+
+  // Files
+  if HasOption('k', 'config-file') then
+    ConfigFile := GetOptionValue('k', 'config-file');
+  if HasOption('s', 'servers-file') then
+    ServersFile := GetOptionValue('s', 'servers-file');
+
+  // Data
   if HasOption('h', 'help') then begin
     WriteHelp;
-    Terminate;
-    Exit;
+    Terminate; Exit;
   end;
 
   if HasOption('create') then begin
     WriteDefaultConfig;
     WriteDefaultServer;
-    Terminate;
-    Exit;
+    Terminate; Exit;
   end;
   if HasOption('create-config') then begin
     WriteDefaultConfig;
-    Terminate;
-    Exit;
+    Terminate; Exit;
   end;
   if HasOption('create-server-list') then begin
     WriteDefaultServer;
-    Terminate;
-    Exit;
+    Terminate; Exit;
   end;
 
-  if HasOption('debug') then
-    begin
-      Terminate;
-      Exit;
-    end;
+  if HasOption('compile') then
+    begin Terminate; Exit; end;
 
   if HasOption('check-updates') then
     begin
@@ -281,7 +294,7 @@ begin
       Exit;
     end;
 
-  // Config
+  // Config (+ create file monitor)
   LoadConfig;
   if Terminated then
     Exit;
@@ -364,6 +377,8 @@ begin
   WriteDate;
   TConsole.WriteLn:= 'Reading configuration';
 
+  AddLog('Reading config');
+
   // Read
   try
     Config := ReadConfig;
@@ -401,6 +416,8 @@ var
 begin
   WriteDate;
   TConsole.WriteLn:= 'Reading server list';
+
+  AddLog('Reading server list');
 
   // Read
   try
@@ -442,6 +459,7 @@ begin
   WriteDate;
   TConsole.WriteLn:= 'Reading configuration';
   ResetNewLn;
+  AddLog('Loading updated configuration');
 
   // Read
   try
@@ -485,14 +503,15 @@ var
   DelCount, NewCount: integer;
 begin
   WriteDate;
-  TConsole.WriteLn:= 'Reading configuration';
+  TConsole.WriteLn:= 'Reading server list';
   ResetNewLn;
+  AddLog('Loading updated server list');
 
   // Read
   try
     List := ReadMappings;
   except
-    WriteError('Could not load server list. The previous indexed list will be kept.');
+    WriteError('Could not update server list. The previous indexed list will be kept.');
     Terminate;
     Exit;
   end;
@@ -630,7 +649,7 @@ begin
         WriteNewLn;
       end;
   except
-    TConsole.WriteLn:='Failed to check for updated';
+    WriteWarning('Failed to check for updates');
   end;
 end;
 
@@ -656,7 +675,7 @@ begin
     Sub.Add(KEY_PORT, 25565);
     Data.Add(KEY_DEFAULT_MAP, Sub);
 
-    WriteFile(CONFIG_FILE, Data.FormatJSON());
+    WriteFile(ConfigFile, Data.FormatJSON());
   finally
     Data.Free;
   end;
@@ -703,7 +722,7 @@ begin
       Item
     );
 
-    WriteFile(SERVERS_FILE, Data.FormatJSON());
+    WriteFile(ServersFile, Data.FormatJSON());
   finally
     Data.Free;
   end;
@@ -743,7 +762,7 @@ function TMapperApplication.ReadConfig: TConfigData;
 var
   Data: TJSONObject;
 begin
-  Data := GetJSON(ReadFile(CONFIG_FILE).Replace(#13, '')) as TJSONObject;
+  Data := GetJSON(ReadFile(ConfigFile).Replace(#13, '')) as TJSONObject;
 
   with Result do
     begin
@@ -763,7 +782,7 @@ var
   I: integer;
 begin
   Result := [];
-  Data := GetJSON(ReadFile(SERVERS_FILE).Replace(#13, '')) as TJSONArray;
+  Data := GetJSON(ReadFile(ServersFile).Replace(#13, '')) as TJSONArray;
   SetLength(Result, Data.Count);
 
   // Parse
@@ -790,9 +809,10 @@ begin
   TConsole.TextColor := TConsoleColor.LightGreen;
   TConsole.Write := 'Incoming connection from ';
   TConsole.TextColor := TConsoleColor.LightBlue;
-  TConsole.WriteLn := Format('%S on port %D', [AContext.Binding.PeerIP, AContext.Binding.Port]);
-
+  TConsole.WriteLn := Format('"%S" on port %D', [AContext.Binding.PeerIP, AContext.Binding.Port]);
   ResetNewLn;
+
+  AddLog(Format('New connection: "%S:%D"', [AContext.Binding.PeerIP, AContext.Binding.Port]), 'CONNECTION');
 end;
 
 procedure TMapperApplication.OnMap(AContext: TIdContext);
@@ -813,6 +833,8 @@ begin
   else
     TConsole.WriteLn:='';
   ResetNewLn;
+
+  AddLog(Format('Mapped: "%S, server "%S" to "%S:%D"', [Con.Binding.PeerIP, Con.Address, Con.Host, Con.Port]), 'MAPPER');
 end;
 
 procedure TMapperApplication.OnDisconnect(AContext: TIdContext);
@@ -828,8 +850,9 @@ begin
   TConsole.Write := 'Disconnected from ';
   TConsole.TextColor := TConsoleColor.White;
   TConsole.WriteLn := Format('"%S", on server "%S:%D"', [Con.Binding.PeerIP, Con.Host, Con.Port]);
-
   ResetNewLn;
+
+  AddLog(Format('Disconnected from: "%S:%D", server: "%S"', [Con.Binding.PeerIP, Con.Binding.PeerPort, Con.Host]), 'CONNECTION');
 end;
 
 procedure TMapperApplication.OnReject(AContext: TIdContext);
@@ -845,8 +868,9 @@ begin
   TConsole.WriteLn:=Format('Connection for "%S" was dropped. No mapping found for "%S".', [Con.Binding.PeerIP, Con.Address]);
   AContext.Connection.Disconnect;
   TConsole.ResetStyle;
-
   ResetNewLn;
+
+  AddLog(Format('Rejected "%S, no server named "%S" found', [Con.Binding.PeerIP, Con.Address]), 'MAPPER');
 end;
 
 procedure TMapperApplication.OnFailSignature(AContext: TIdContext);
@@ -858,8 +882,9 @@ begin
   TConsole.WriteLn:=Format('Connection for "%S" was dropped. Could not read signature', [AContext.Binding.PeerIP]);
   AContext.Connection.Disconnect;
   TConsole.ResetStyle;
-
   ResetNewLn;
+
+  AddLog(Format('Rejected "%S, invalid signature', [AContext.Binding.PeerIP]), 'SIGNATURE');
 end;
 
 procedure TMapperApplication.OnFailOutboundConnect(AContext: TIdContext);
@@ -872,11 +897,12 @@ begin
   WriteDate;
 
   TConsole.TextColor:=TConsoleColor.Red;
-  TConsole.WriteLn:=Format('Could not connect outbound server "%S:%D".', [Con.Host, Con.Port]);
+  TConsole.WriteLn:=Format('Could not connect "%S" to outbound server "%S:%D".', [Con.Binding.PeerIP, Con.Host, Con.Port]);
   AContext.Connection.Disconnect;
   TConsole.ResetStyle;
-
   ResetNewLn;
+
+  AddLog(Format('Could not connect "%S" to outbound server "%S:%D"', [Con.Binding.PeerIP, Con.Host, Con.Port]), 'OUTBOUND');
 end;
 
 procedure TMapperApplication.ResetNewLn;
@@ -917,6 +943,8 @@ begin
   TConsole.ResetStyle;
   TConsole.Write:=' ';
   TConsole.WriteLn:=Error;
+
+  AddLog(Error, 'ERROR');
 end;
 
 procedure TMapperApplication.WriteWarning(Warning: string);
@@ -927,6 +955,8 @@ begin
   TConsole.ResetStyle;
   TConsole.Write:=' ';
   TConsole.WriteLn:=Warning;
+
+  AddLog(Warning, 'WARNING');
 end;
 
 procedure TMapperApplication.WriteTitle(ATitle: string);
@@ -944,6 +974,13 @@ begin
   inherited Create(TheOwner);
   StopOnException:=True;
 
+  // Files
+  ApplicationDir:=IncludeTrailingPathDelimiter(ExtractFileDir(ParamStr(0)));
+  ConfigFile:=ApplicationDir+CONFIG_FILE_NAME;
+  ServersFile:=ApplicationDir+SERVERS_FILE_NAME;
+  LogsFile:=ApplicationDir+LOGS_FILE_NAME;
+
+  // Status
   TConsole.TextColor:= TConsoleColor.LightBlue;
   TConsole.WriteLn:= 'Starting minecraft server mapper';
   TConsole.TextColor:= TConsoleColor.White;
@@ -964,6 +1001,7 @@ begin
   Mapper.OnDisconnect := @OnDisconnect;
 
   // Defaults
+  Mapper.ConnectionTimeout:=-1; // use Indy Default
   Mapper.DefaultPort := 25565;
   Mapper.DefaultAllow:=false;
 end;
@@ -999,6 +1037,9 @@ begin
 
   WriteTitle('Avalabile parameters');
   TConsole.WriteLn:='-h --help -> Provides help documentation';
+  TConsole.WriteLn:='-k --config-file <path> -> Provide custom path for config file';
+  TConsole.WriteLn:='-s --servers-file <path> -> Provide custom path for servers file';
+  TConsole.WriteLn:='--log-messages -> Output log file';
   TConsole.WriteLn:='--no-update -> Bypass update checking';
   TConsole.WriteLn:='--create -> Create all necesary configuration files';
   TConsole.WriteLn:='--create-config -> Write new config file';
@@ -1025,6 +1066,31 @@ begin
   TConsole.WriteLn:=' Source: '+Mapping.Address;
   TConsole.WriteLn:=Format(' Destination %S:%D', [Mapping.Host, Mapping.Port]);
   ResetNewLn;
+end;
+
+procedure TMapperApplication.AddLog(Text: string; Kind: string);
+var
+  F: TextFile;
+begin
+  if not FDoLogging then
+    Exit;
+
+  AssignFile(F, LogsFile);
+  try
+    try
+      if fileexists(LogsFile) then
+        Append(F)
+      else
+        Rewrite(F);
+
+      WriteLn(F, Format('[%S] %S: %S', [DateTimeToStr(Now), UpperCase(Kind), Text]));
+    except
+      FDoLogging := false;
+      WriteError('Could not edit logs file. Logging will now be disabled.'); // no recursion, as logs are now disabled
+    end;
+  finally
+    CloseFile(F);
+  end;
 end;
 
 begin

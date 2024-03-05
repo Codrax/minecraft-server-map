@@ -8,22 +8,24 @@
         <Filename Value="minemap.lpr"/>
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="920"/>
-        <CursorPos X="27" Y="926"/>
-        <UsageCount Value="73"/>
-        <Bookmarks Count="2">
-          <Item0 X="5" Y="833" ID="3"/>
-          <Item1 X="20" Y="107" ID="1"/>
+        <TopLine Value="240"/>
+        <CursorPos X="36" Y="258"/>
+        <UsageCount Value="75"/>
+        <Bookmarks Count="3">
+          <Item0 X="5" Y="856" ID="3"/>
+          <Item1 X="33" Y="1040" ID="2"/>
+          <Item2 X="3" Y="257" ID="1"/>
         </Bookmarks>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="/usr/share/fpcsrc/3.2.2/packages/fcl-base/src/custapp.pp"/>
         <UnitName Value="CustApp"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="51"/>
-        <CursorPos X="16" Y="61"/>
-        <UsageCount Value="9"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="59"/>
+        <CursorPos X="22" Y="72"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="../Libraries/Codrut Library Pack/Cod.Console.pas"/>
@@ -102,11 +104,11 @@
       <Unit>
         <Filename Value="MinecraftMapper.pas"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="206"/>
-        <CursorPos X="38" Y="223"/>
+        <TopLine Value="576"/>
+        <CursorPos Y="589"/>
         <UsageCount Value="14"/>
         <Bookmarks Count="1">
-          <Item0 X="3" Y="451" ID="2"/>
+          <Item0 X="3" Y="460" ID="2"/>
         </Bookmarks>
       </Unit>
       <Unit>
@@ -136,7 +138,7 @@
       <Unit>
         <Filename Value="Dependencies/Cod.Console.pas"/>
         <EditorIndex Value="-1"/>
-        <CursorPos X="3" Y="10"/>
+        <CursorPos X="5" Y="23"/>
         <UsageCount Value="10"/>
       </Unit>
       <Unit>
@@ -152,19 +154,82 @@
         <CursorPos X="28" Y="20"/>
         <UsageCount Value="10"/>
       </Unit>
+      <Unit>
+        <Filename Value="/usr/share/fpcsrc/3.2.2/rtl/objpas/objpas.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="146"/>
+        <CursorPos X="15" Y="148"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="../../Lazarus Apps/Indy Internet Direct 10/Lib/System/IdGlobal.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="782"/>
+        <CursorPos X="3" Y="799"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="../../Lazarus Apps/Indy Internet Direct 10/Lib/Core/IdTCPClient.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="133"/>
+        <CursorPos X="21" Y="141"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
     </Units>
-    <JumpHistory HistoryIndex="2">
+    <JumpHistory HistoryIndex="12">
       <Position>
         <Filename Value="minemap.lpr"/>
-        <Caret Line="275" Column="17" TopLine="260"/>
+        <Caret Line="149" Column="21" TopLine="141"/>
       </Position>
       <Position>
         <Filename Value="minemap.lpr"/>
-        <Caret Line="910" Column="48" TopLine="882"/>
+        <Caret Line="973" Column="6" TopLine="967"/>
       </Position>
       <Position>
         <Filename Value="minemap.lpr"/>
-        <Caret Line="132" Column="15" TopLine="116"/>
+        <Caret Line="142" Column="19" TopLine="121"/>
+      </Position>
+      <Position>
+        <Filename Value="minemap.lpr"/>
+        <Caret Line="1033" Column="33" TopLine="1023"/>
+      </Position>
+      <Position>
+        <Filename Value="minemap.lpr"/>
+        <Caret Line="66" Column="16" TopLine="62"/>
+      </Position>
+      <Position>
+        <Filename Value="minemap.lpr"/>
+        <Caret Line="290" Column="9" TopLine="270"/>
+      </Position>
+      <Position>
+        <Filename Value="minemap.lpr"/>
+        <Caret Line="111" Column="15" TopLine="95"/>
+      </Position>
+      <Position>
+        <Filename Value="minemap.lpr"/>
+        <Caret Line="370" Column="3" TopLine="394"/>
+      </Position>
+      <Position>
+        <Filename Value="minemap.lpr"/>
+        <Caret Line="257" Column="39" TopLine="245"/>
+      </Position>
+      <Position>
+        <Filename Value="minemap.lpr"/>
+        <Caret Line="258" Column="50" TopLine="245"/>
+      </Position>
+      <Position>
+        <Filename Value="minemap.lpr"/>
+        <Caret Line="260" Column="37" TopLine="240"/>
+      </Position>
+      <Position>
+        <Filename Value="minemap.lpr"/>
+        <Caret Line="257" Column="3" TopLine="240"/>
+      </Position>
+      <Position>
+        <Filename Value="minemap.lpr"/>
+        <Caret Line="1040" Column="33" TopLine="1023"/>
       </Position>
     </JumpHistory>
     <RunParams>
@@ -172,7 +237,7 @@
       <Modes ActiveMode="default">
         <Mode Name="default">
           <local>
-            <CommandLineParams Value="-debug"/>
+            <CommandLineParams Value="--compile"/>
           </local>
         </Mode>
       </Modes>
@@ -181,8 +246,9 @@
       <List Name="LaunchingApplication" Type="File" Count="1">
         <Item1 Value="/usr/bin/gnome-terminal -t &apos;Lazarus Run Output&apos; -e &apos;$(LazarusDir)/tools/runwait.sh $(TargetCmdLine)&apos;"/>
       </List>
-      <List Name="CommandLineParameters" Count="1">
-        <Item1 Value="-debug"/>
+      <List Name="CommandLineParameters" Count="2">
+        <Item1 Value="--compile"/>
+        <Item2 Value="-debug"/>
       </List>
     </HistoryLists>
   </ProjectSession>

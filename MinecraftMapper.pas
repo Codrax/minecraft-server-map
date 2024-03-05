@@ -15,6 +15,7 @@ uses
   IdAssignedNumbers,
   IdContext,
   IdCustomTCPServer,
+  Cod.Console,
   IdGlobal, IdStack, IdTCPConnection, IdTCPServer, IdYarn, SysUtils;
 
 type
@@ -29,12 +30,16 @@ type
   TMinecraftMappings = array of TMinecraftMapping;
 
   // Context
+
+  { TMinecraftPortContext }
+
   TMinecraftPortContext = class(TIdServerContext)
+  private
+    function GetConnectionTimeout: Integer;
   protected
     FOutboundClient: TIdTCPConnection;//was TIdTCPClient
     FReadList: TIdSocketList;
     FDataAvailList: TIdSocketList;
-    FConnectTimeOut: Integer;
     FNetData: TIdBytes;
     FServerMc : TMinecraftPortTCP;
     FOutboundConnected: boolean;
@@ -65,7 +70,7 @@ type
     property UsesDefault: boolean read FUsesDefault;
     //
     property  Server : TMinecraftPortTCP Read FServerMc write FServerMc;
-    property  ConnectTimeOut: Integer read FConnectTimeOut write FConnectTimeOut default IdTimeoutDefault;
+    property  ConnectTimeOut: Integer read GetConnectionTimeout;
     property  NetData: TIdBytes read FNetData write FNetData;
     property  OutboundClient: TIdTCPConnection read FOutboundClient write FOutboundClient;
   end;//TMinecraftPortContext
@@ -89,6 +94,7 @@ type
 
     // Connections
     FActiveConnections: TMinecraftPortList;
+    FConnectionTimeout: integer;
 
     //AThread.Connection.Server & AThread.OutboundClient
     FOnOutboundConnect,
@@ -154,6 +160,8 @@ type
     property DefaultMapping: TMinecraftMapping read FDefaultMapping write FDefaultMapping;
     property Mappings: TMinecraftMappings read FMappings write FMappings;
 
+    property ConnectionTimeout: integer read FConnectionTimeout write FConnectionTimeout;
+
     property ActiveConnections: TMinecraftPortList read FActiveConnections write FActiveConnections;
     property ConnectionCount: integer read GetConnectionCount;
   end;//TIdMappedPortTCP
@@ -177,6 +185,7 @@ begin
   inherited InitComponent;
   FContextClass := TMinecraftPortContext;
   SetDefaultPort(25565);
+  ConnectionTimeout := -1;
 end;
 
 procedure TMinecraftPortTCP.RemoveMapping(Index: integer; Disconnect: boolean);
@@ -485,7 +494,6 @@ begin
   inherited Create(AConnection, AYarn, AList);
   FReadList := TIdSocketList.CreateSocketList;
   FDataAvailList := TIdSocketList.CreateSocketList;
-  FConnectTimeOut := IdTimeoutDefault;
 end;
 
 destructor TMinecraftPortContext.Destroy;
@@ -574,7 +582,7 @@ begin
 
     LServer.DoLocalClientConnect(Self);
 
-    LClient.ConnectTimeout := FConnectTimeOut;
+    LClient.ConnectTimeout := ConnectTimeOut;
     LClient.Connect;
 
     LServer.DoOutboundClientConnect(Self);
@@ -582,6 +590,7 @@ begin
     // Success
     FOutboundConnected := true;
 
+    TConsole.WriteLn:='Check data';
     //APR: buffer can contain data from prev (users) read op.
     CheckForData(False);
   except
@@ -597,6 +606,11 @@ begin
 
   // cache
   FReadList.Add(FOutboundClient.Socket.Binding.Handle);
+end;
+
+function TMinecraftPortContext.GetConnectionTimeout: Integer;
+begin
+  Result := Server.ConnectionTimeout;
 end;
 
 procedure TMinecraftPortContext.ReadHandshakeData;
