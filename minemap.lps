@@ -7,9 +7,7 @@
       <Unit>
         <Filename Value="minemap.lpr"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="240"/>
-        <CursorPos X="36" Y="258"/>
+        <CursorPos X="10" Y="21"/>
         <UsageCount Value="75"/>
         <Bookmarks Count="3">
           <Item0 X="5" Y="856" ID="3"/>
@@ -21,7 +19,7 @@
       <Unit>
         <Filename Value="/usr/share/fpcsrc/3.2.2/packages/fcl-base/src/custapp.pp"/>
         <UnitName Value="CustApp"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="2"/>
         <TopLine Value="59"/>
         <CursorPos X="22" Y="72"/>
         <UsageCount Value="10"/>
@@ -103,13 +101,12 @@
       </Unit>
       <Unit>
         <Filename Value="MinecraftMapper.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="576"/>
-        <CursorPos Y="589"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="565"/>
+        <CursorPos Y="592"/>
         <UsageCount Value="14"/>
-        <Bookmarks Count="1">
-          <Item0 X="3" Y="460" ID="2"/>
-        </Bookmarks>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="/usr/share/fpcsrc/3.2.2/packages/fcl-json/src/fpjson.pp"/>
@@ -178,7 +175,7 @@
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="12">
+    <JumpHistory HistoryIndex="13">
       <Position>
         <Filename Value="minemap.lpr"/>
         <Caret Line="149" Column="21" TopLine="141"/>
@@ -209,10 +206,6 @@
       </Position>
       <Position>
         <Filename Value="minemap.lpr"/>
-        <Caret Line="370" Column="3" TopLine="394"/>
-      </Position>
-      <Position>
-        <Filename Value="minemap.lpr"/>
         <Caret Line="257" Column="39" TopLine="245"/>
       </Position>
       <Position>
@@ -230,6 +223,13 @@
       <Position>
         <Filename Value="minemap.lpr"/>
         <Caret Line="1040" Column="33" TopLine="1023"/>
+      </Position>
+      <Position>
+        <Filename Value="minemap.lpr"/>
+        <Caret Line="21" Column="10"/>
+      </Position>
+      <Position>
+        <Filename Value="MinecraftMapper.pas"/>
       </Position>
     </JumpHistory>
     <RunParams>

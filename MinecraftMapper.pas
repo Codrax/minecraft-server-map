@@ -590,7 +590,6 @@ begin
     // Success
     FOutboundConnected := true;
 
-    TConsole.WriteLn:='Check data';
     //APR: buffer can contain data from prev (users) read op.
     CheckForData(False);
   except
