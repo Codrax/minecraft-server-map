@@ -5,6 +5,10 @@ This app allows you to host multiple minecraft servers on the same device and It
 
 This functions by capturing the handshake of the client, and than comparing a list of all avalabile servers.
 
+## Latest up to date version
+This version of the software was written in Lazarus, but in the meantime, I created a new version on Embaracadero Delphi 12 with more features, and which is more up to date. This version will no longer get updates. The new version is here:
+https://github.com/Codrax/minecraft-server-mapper/edit/main/README.md
+
 ## Dependencies
 The app works as the single file executable, but for update checking functionality, the folder shared-lib is required in the same location as the executable.
 
