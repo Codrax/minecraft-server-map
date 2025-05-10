@@ -7,6 +7,7 @@ This functions by capturing the handshake of the client, and than comparing a li
 
 ## Latest up to date version
 This version of the software was written in Lazarus, but in the meantime, I created a new version on Embaracadero Delphi 12 with more features, and which is more up to date. This version will no longer get updates. The new version is here:
+
 https://github.com/Codrax/minecraft-server-mapper/edit/main/README.md
 
 ## Dependencies
